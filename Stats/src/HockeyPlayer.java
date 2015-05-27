@@ -1,6 +1,7 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class HockeyPlayer implements Serializable {
+public class HockeyPlayer implements Serializable, Comparable<HockeyPlayer> {
 
 	private static final long serialVersionUID = 4633272108937669018L;
 	
@@ -21,6 +22,7 @@ public class HockeyPlayer implements Serializable {
 	private int shorthanded;
 	private int gameWinning;
 	private int timeOnIce;
+	private double ranking;
 	
 	public String getPosition() {
 		return position;
@@ -118,3 +120,67 @@ public class HockeyPlayer implements Serializable {
 	public void setTimeOnIce(int timeOnIce) {
 		this.timeOnIce = timeOnIce;
 	}
+	public double getRanking() {
+		return ranking;
+	}
+	public void setRanking(double ranking) {
+		this.ranking = ranking;
+	}
+	
+	public static void calculateRanking(ArrayList<HockeyPlayer> playerList, Statistics leagueStats, Boolean[] selectedStats) {
+		
+		for(HockeyPlayer player: playerList) {
+			
+			double rank = 0;
+			
+			if (selectedStats[0] = true) {
+				rank += ((player.getGoals()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgGoals())/ leagueStats.getStdGoals();
+			}
+			if (selectedStats[1] = true) {
+				rank += ((player.getAssists()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgAssists())/ leagueStats.getStdAssists();
+			}
+			if (selectedStats[2] = true) {
+				rank += ((player.getPlusminus()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgPlusminus())/ leagueStats.getStdPlusminus();
+			}
+			if (selectedStats[3] = true) {
+				rank += ((player.getPims()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgPims())/ leagueStats.getStdPims();
+			}
+			if (selectedStats[4] = true) {
+				rank += ((player.getShots()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgShots())/ leagueStats.getStdShots();
+			}
+			if (selectedStats[5] = true) {
+				rank += ((player.getHits()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgHits())/ leagueStats.getStdHits();
+			}
+			if (selectedStats[6] = true) {
+				rank += ((player.getBlocks()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgBlocks())/ leagueStats.getStdBlocks();
+			}
+			if (selectedStats[7] = true) {
+				rank += ((player.getTakeaways()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgTakeaways())/ leagueStats.getStdTakeaways();
+			}
+			if (selectedStats[8] = true) {
+				rank += ((player.getPowerplay()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgPowerplay())/ leagueStats.getStdPowerplay();
+			}
+			if (selectedStats[9] = true) {
+				rank += ((player.getShorthanded()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgShorthanded())/ leagueStats.getStdShorthanded();
+			}
+			if (selectedStats[10] = true) {
+				rank += ((player.getGameWinning()*1.0)/(player.getGamesPlayed()*1.0) - leagueStats.getAvgGameWinning())/ leagueStats.getStdGameWinning();
+			}
+			
+			player.setRanking(rank);
+			
+		}
+	}
+
+	public int compareTo(HockeyPlayer o) {
+		if (this.getRanking() == o.getRanking()) {
+			return 0;
+		} else if (this.getRanking() < o.getRanking()) {
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+	
+	
+}
