@@ -1,28 +1,32 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class MainApplication {
 
-	static final Scanner scan = new Scanner(System.in);
-
 	public static void main(String[] args) {
 
+		// Loads in database of player statistics
 		ArrayList<HockeyPlayer> masterList = DataHandling.loadPlayers();
-		ArrayList<HockeyPlayer> filteredList = DataHandling.playerFiltering(
-				masterList, scan);
 
+		// Filters out players by users specifications
+		ArrayList<HockeyPlayer> filteredList = DataHandling
+				.playerFiltering(masterList);
+
+		// Calculates league averages and standard deviations with filtered list
 		Statistics leagueStats = DataHandling.calcLeagueStats(filteredList);
 
-		Boolean[] selectedStats = DataHandling.statSelecting(scan);
+		// Gets user to select which statistics to include in a ranking
+		Boolean[] selectedStats = InputOutput.statSelecting();
 
+		// Calculates player ranking
 		HockeyPlayer.calculateRanking(filteredList, leagueStats, selectedStats);
 
+		// Sorts arraylist by ranking
 		Collections.sort(filteredList);
 
-		for (HockeyPlayer player : filteredList) {
-			System.out.println(player.getName() + " - " + player.getTeam());
-		}
+		// Outputs results
+		InputOutput.displayResults(filteredList);
+
 	}
 
 }
