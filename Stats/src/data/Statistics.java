@@ -1,7 +1,11 @@
+package data;
+
 import java.util.HashMap;
 
 /**
- * Statistics - A class to hold the league statistics and the keys for the hashmaps
+ * Statistics - A class to hold the league statistics and the keys for the
+ * hashmaps
+ * 
  * @author Nathan Murnaghan
  *
  */
@@ -18,9 +22,9 @@ public class Statistics {
 
 		averages = new HashMap<String, Double>();
 		standardDeviations = new HashMap<String, Double>();
-		keys = new String[] { "goals", "assists", "plusminus", "pims", "shots",
-				"hits", "blocks", "takeaways", "powerplay", "shorthanded",
-				"gameWinning" };
+		keys = new String[] { "G", "A", "+/-", "PIMs", "Shots",
+				"Hits", "Blks", "TKA", "PPP", "SHP",
+				"GWG" };
 
 		for (String myKey : keys) {
 			averages.put(myKey, 0.0);

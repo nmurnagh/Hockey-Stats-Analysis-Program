@@ -1,9 +1,13 @@
+package data;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * HockeyPlayer --- Contains the information and statistics of the hockey players
+ * HockeyPlayer --- Contains the information and statistics of the hockey
+ * players
+ * 
  * @author Nathan Murnaghan
  *
  */
@@ -52,11 +56,15 @@ public class HockeyPlayer implements Serializable, Comparable<HockeyPlayer> {
 	}
 
 	/**
-	 * Calculates a ranking for each hockey player by comparing their 
-	 * statistics to league statistics
-	 * @param playerList - Contains all the HockeyPlayer Objects
-	 * @param leagueStats - Statistics object containing league statistics
-	 * @param selectedStats - User specified statistics to be analyzed
+	 * Calculates a ranking for each hockey player by comparing their statistics
+	 * to league statistics
+	 * 
+	 * @param playerList
+	 *            - Contains all the HockeyPlayer Objects
+	 * @param leagueStats
+	 *            - Statistics object containing league statistics
+	 * @param selectedStats
+	 *            - User specified statistics to be analyzed
 	 */
 	public static void calculateRanking(ArrayList<HockeyPlayer> playerList,
 			Statistics leagueStats, Boolean[] selectedStats) {

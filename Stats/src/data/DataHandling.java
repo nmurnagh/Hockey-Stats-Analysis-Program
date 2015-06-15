@@ -1,11 +1,16 @@
+package data;
+
+import java.io.DataInput;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 /**
  * DataHandling --- Handles data manipulation
+ * 
  * @author Nathan Murnaghan
  */
 
@@ -13,20 +18,21 @@ public class DataHandling {
 
 	/**
 	 * Loads in player statistic database
+	 * 
 	 * @exception FileNotFound, IO, ClassNotFound
 	 * @return ArrayList playerList containing all HockeyPlayer objects
 	 */
+	
 	public static ArrayList<HockeyPlayer> loadPlayers() {
 		ArrayList<HockeyPlayer> playerList = new ArrayList<HockeyPlayer>();
 
 		try {
-			FileInputStream fs = new FileInputStream("stats.ser");
-			ObjectInputStream os = new ObjectInputStream(fs);
+			ObjectInputStream os = new ObjectInputStream(DataHandling.class.getResourceAsStream("stats.ser"));
 
 			int num = os.readInt();
 
 			for (int i = 0; i < num; i++) {
-				playerList.add((HockeyPlayer) os.readObject());
+				playerList.add((data.HockeyPlayer) os.readObject());
 			}
 
 			os.close();
@@ -45,18 +51,19 @@ public class DataHandling {
 
 	/**
 	 * Accepts masterList and filters it based on games played
+	 * 
 	 * @param masterList - A list of all the HockeyPlayer Objects
+	 * @param minGames - minimum number of games required to be included in the list
 	 * @return filteredList - A list with HockeyPlayer objects that have played
 	 *         more than a user specified number of games
 	 */
 	public static ArrayList<HockeyPlayer> playerFiltering(
-			ArrayList<HockeyPlayer> masterList) {
+			ArrayList<HockeyPlayer> masterList, Integer minGames) {
 
 		ArrayList<HockeyPlayer> filteredList = new ArrayList<HockeyPlayer>();
-		int gamesReq = InputOutput.gamesRequired();
 
 		for (HockeyPlayer player : masterList) {
-			if (player.getGamesPlayed() >= gamesReq) {
+			if (player.getGamesPlayed() >= minGames) {
 				filteredList.add(player);
 			}
 		}
@@ -66,16 +73,17 @@ public class DataHandling {
 
 	/**
 	 * Calculates league average and standard deviation for each statistic
+	 * 
 	 * @param playerList - List of HockeyPlayer objects to extract statistics from
-	 * @return leagueStats - A Statistics object containing the calculated averages
-	 * 						and standard deviations
+	 * @return leagueStats - A Statistics object containing the calculated
+	 *         averages and standard deviations
 	 */
 	public static Statistics calcLeagueStats(ArrayList<HockeyPlayer> playerList) {
 
 		Statistics leagueStats = new Statistics();
-		
+
 		// Calculates and sets league averages
-		Integer[] counter = new Integer[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //counter for each statistic
+		Integer[] counter = new Integer[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; 
 
 		for (HockeyPlayer player : playerList) {
 			for (int i = 0; i < 11; i++) {
