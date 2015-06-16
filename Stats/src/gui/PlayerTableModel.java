@@ -42,7 +42,7 @@ public class PlayerTableModel extends AbstractTableModel {
 		
 		switch(col) {
 		case 0:
-			return row;
+			return row+1;
 		case 1:
 			return player.getName();
 		case 2:
