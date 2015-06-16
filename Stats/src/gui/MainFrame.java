@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -42,6 +43,7 @@ public class MainFrame extends JFrame {
 		//Main Frame configuration
 		add(inputPanel, BorderLayout.WEST);
 		add(tablePanel, BorderLayout.CENTER);
+		tablePanel.setBackground(inputPanel.getBackground());
 		setMinimumSize(new Dimension(960, 540));
 		setSize(1600, 900);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

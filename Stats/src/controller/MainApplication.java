@@ -17,6 +17,7 @@ public class MainApplication {
 	
 	static ArrayList<HockeyPlayer> masterList = new ArrayList<HockeyPlayer>();
 	static ArrayList<HockeyPlayer> filteredList = new ArrayList<HockeyPlayer>();
+	static Statistics leagueStats = new Statistics();
 
 	public static void main(String[] args) {
 
@@ -46,15 +47,19 @@ public class MainApplication {
 		
 		Integer minGames = ev.getMinGames();
 		Boolean[] selectedStats = ev.getSelectedStats();
+		int positionFilter = ev.getPositionFilter();
+		String analysisType = ev.getAnalysisType();
 		
-		// Filters out players by users specifications
-		filteredList = DataHandling.playerFiltering(masterList, minGames);
+		//Filters the players based on user defined games played and position
+		filteredList = DataHandling.playerFiltering(masterList, minGames, positionFilter);
 		
-		// Calculates league averages and standard deviations with filtered list
-		Statistics leagueStats = DataHandling.calcLeagueStats(filteredList);
-		
-		// Calculates player ranking
-		HockeyPlayer.calculateRanking(filteredList, leagueStats, selectedStats);
+		if(analysisType.equals("Per Game")) {
+			leagueStats = DataHandling.calcLeagueStats(filteredList);
+			HockeyPlayer.calculateRanking(filteredList, leagueStats, selectedStats);
+		} else if(analysisType.equals("Per TOI")) {
+			leagueStats = DataHandling.calcLeagueStatsTOI(filteredList);
+			HockeyPlayer.calculateTOIRanking(filteredList, leagueStats, selectedStats);
+		}
 		
 		// Sorts arraylist by ranking
 		Collections.sort(filteredList);

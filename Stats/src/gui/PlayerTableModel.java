@@ -20,8 +20,8 @@ public class PlayerTableModel extends AbstractTableModel {
 	
 	public PlayerTableModel() {
 		
-		labels = new String[] {"Name","Team","Position","GP","G","A","+/-","PIMs","Shots",
-				"Hits","Blks","TKA","PPP","SHP","GWG" };
+		labels = new String[] {"Rank","Name","Team","Position","GP","G","A","+/-","PIMs","Shots",
+				"Hits","Blks","TKA","PPP","SHP","GWG","TOI/G"};
 	}
 	
 	public String getColumnName(int col) {
@@ -29,7 +29,7 @@ public class PlayerTableModel extends AbstractTableModel {
 	}
 	
 	public int getColumnCount() {
-		return 15;
+		return 17;
 	}
 
 	public int getRowCount() {
@@ -42,15 +42,15 @@ public class PlayerTableModel extends AbstractTableModel {
 		
 		switch(col) {
 		case 0:
-			return player.getName();
+			return row;
 		case 1:
-			return player.getTeam();
+			return player.getName();
 		case 2:
-			return player.getPosition();
+			return player.getTeam();
 		case 3:
-			return player.getGamesPlayed();
+			return player.getPosition();
 		case 4:
-			return player.getStats(labels[col]);
+			return player.getGamesPlayed();
 		case 5:
 			return player.getStats(labels[col]);
 		case 6:
@@ -71,6 +71,10 @@ public class PlayerTableModel extends AbstractTableModel {
 			return player.getStats(labels[col]);
 		case 14:
 			return player.getStats(labels[col]);
+		case 15:
+			return player.getStats(labels[col]);
+		case 16:
+			return player.getTimeOnIcePerGame();
 		}
 		return null;
 	}
@@ -78,5 +82,6 @@ public class PlayerTableModel extends AbstractTableModel {
 	public void setData(ArrayList<HockeyPlayer> playerList) {
 		this.playerList = playerList;
 	}
+	
 
 }

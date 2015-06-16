@@ -42,6 +42,18 @@ public class HockeyPlayer implements Serializable, Comparable<HockeyPlayer> {
 	public int getTimeOnIce() {
 		return timeOnIce;
 	}
+	
+	public String getTimeOnIcePerGame() {
+		int minutes = timeOnIce/gamesPlayed;
+		double decimal = (timeOnIce*1.0)/(gamesPlayed*1.0) - minutes;
+		int seconds = (int) (decimal*60);
+		if(seconds > 9) {
+			return minutes + ":" + seconds;
+		} else {
+			return minutes + ":0" + seconds;
+		}
+		
+	}
 
 	public double getRanking() {
 		return ranking;
@@ -77,6 +89,28 @@ public class HockeyPlayer implements Serializable, Comparable<HockeyPlayer> {
 				if (selectedStats[i] == true) {
 					rank += ((player.getStats(leagueStats.getKeys(i)) * 1.0)
 							/ (player.getGamesPlayed() * 1.0) - leagueStats
+								.getAverages(leagueStats.getKeys(i)))
+							/ leagueStats.getStandardDeviations(leagueStats
+									.getKeys(i));
+				}
+			}
+
+			player.setRanking(rank);
+
+		}
+	}
+	
+	public static void calculateTOIRanking(ArrayList<HockeyPlayer> playerList,
+			Statistics leagueStats, Boolean[] selectedStats) {
+		
+		for (HockeyPlayer player : playerList) {
+
+			double rank = 0;
+
+			for (int i = 0; i < 11; i++) {
+				if (selectedStats[i] == true) {
+					rank += ((player.getStats(leagueStats.getKeys(i)) * 1.0)
+							/ (player.getTimeOnIce() * 1.0) - leagueStats
 								.getAverages(leagueStats.getKeys(i)))
 							/ leagueStats.getStandardDeviations(leagueStats
 									.getKeys(i));
